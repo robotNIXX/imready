@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  mysql:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=0
+      - MYSQL_RANDOM_ROOT_PASSWORD=0
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=dev
+      - MYSQL_DATABASE=imready
+      - MYSQL_PASSWORD=dev
+
+  myapp:
+    tty: true
+    image: bitnami/laravel:7
+    environment:
+      - DB_HOST=mysql
+      - DB_USERNAME=dev
+      - DB_DATABASE=imready
+      - DB_PASSWORD=dev
+    depends_on:
+      - mysql
+    ports:
+      - 3000:3000
+    volumes:
+      - ./web:/app
+    # privileged: true # Privileged mode could be required to run this container under Windows

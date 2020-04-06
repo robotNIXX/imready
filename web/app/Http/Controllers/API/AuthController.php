@@ -4,13 +4,17 @@
 namespace App\Http\Controllers\API;
 
 
-use App\FormRequests\User\UserRegisterRequest;
 use App\Http\Controllers\Controller;
+use App\Http\FormRequests\User\UserRegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * @param UserRegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(UserRegisterRequest $request)
     {
         $user = new User();

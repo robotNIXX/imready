@@ -46,11 +46,13 @@
                         </md-field>
                         <md-field>
                             <md-input v-model="userRegister.password" name="password" type="password"
-                                      placeholder="Пароль"></md-input>
+                                      placeholder="Пароль" required></md-input>
+                            <span class="md-error" v-if="has_error && errors.password">{{ errors.password }}</span>
                         </md-field>
                         <md-field>
-                            <md-input v-model="userRegister.confirm_password" name="password" type="password"
-                                      placeholder="Подтвердите пароль"></md-input>
+                            <md-input v-model="userRegister.password_confirmation" name="password" type="password"
+                                      placeholder="Подтвердите пароль" required></md-input>
+
                         </md-field>
                         <div class="md-layout md-alignment-top-right">
                             <md-button type="submit" class="md-primary" :disabled="sending">Создать профиль</md-button>
@@ -71,7 +73,11 @@
             showSignup: false,
             sending: false,
             userLogin: {},
-            userRegister: {}
+            userRegister: {},
+            has_error: false,
+            error: '',
+            errors: {},
+            success: false
         }),
         methods: {
             showLoginForm: function() {
@@ -85,7 +91,7 @@
             login: function() {
                 let app = this;
                 this.$auth.login({
-                    params: this.userLogin,
+                    body: this.userLogin,
                     success: function() {
 
                     }
@@ -94,9 +100,15 @@
             register: function() {
                 let app = this;
                 this.$auth.register({
-                    params: this.userRegister,
+                    data: this.userRegister,
                     success: function() {
 
+                    },
+                    error: function (res) {
+                        console.log(res.response.data.errors)
+                        app.has_error = true
+                        app.error = res.response.data.error
+                        app.errors = res.response.data.errors || {}
                     }
                 })
             }

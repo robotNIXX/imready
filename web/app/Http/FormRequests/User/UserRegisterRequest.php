@@ -1,10 +1,8 @@
 <?php
 
+namespace App\Http\FormRequests\User;
 
-namespace App\FormRequests\User;
-
-
-use App\FormRequests\IRFormRequest;
+use App\Http\FormRequests\IRFormRequest;
 
 class UserRegisterRequest extends IRFormRequest
 {

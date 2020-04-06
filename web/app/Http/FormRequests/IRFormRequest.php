@@ -1,10 +1,14 @@
 <?php
 
 
-namespace App\FormRequests;
+namespace App\Http\FormRequests;
 
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 abstract class IRFormRequest extends FormRequest
 {
@@ -18,6 +22,8 @@ abstract class IRFormRequest extends FormRequest
      */
     abstract public function authorize();
 
+
+
     /**
      * @param Validator $validator
      */
@@ -26,7 +32,7 @@ abstract class IRFormRequest extends FormRequest
         $errors = (new ValidationException($validator))->errors();
 
         throw new HttpResponseException(
-            response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            response()->json(['errors' => $errors], JsonResponse::HTTP_BAD_REQUEST)
         );
     }
 

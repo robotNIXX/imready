@@ -6,6 +6,9 @@
         <div class="auth-block md-layout-item md-size-25" v-if="!$auth.check()" @click="showLoginForm()">
             <md-icon>person</md-icon>
         </div>
+        <div class="auth-block md-layout-item md-size-25" v-if="$auth.check()" @click="logout()">
+            <md-icon>exit_to_app</md-icon>
+        </div>
         <md-dialog :md-active.sync="showLogin" class="modal-login">
             <md-dialog-title>
                 Авторизация
@@ -13,13 +16,15 @@
             <md-dialog-content>
                 <form novalidate class="md-layout" @submit.prevent="login" method="post">
                     <div class="md-layout">
-                        <md-field>
+                        <md-field :class="messageClass">
                             <md-input v-model="userLogin.email" name="email" type="email"
                                       placeholder="Адрес электронной почты"></md-input>
+                            <span class="md-error" v-if="has_error && errors.email" v-for="error in errors.email">{{ error }}</span>
                         </md-field>
-                        <md-field>
+                        <md-field :class="messageClass">
                             <md-input v-model="userLogin.password" name="password" type="password"
                                       placeholder="Пароль"></md-input>
+                            <span class="md-error" v-if="has_error && errors.password" v-for="error in errors.password">{{ error }}</span>
                             <span class="md-helper-text"><a href="">Забыли пароль?</a></span>
                         </md-field>
                         <div class="md-layout md-alignment-top-right">
@@ -40,16 +45,22 @@
             <md-dialog-content>
                 <form novalidate class="md-layout" @submit.prevent="register" method="post">
                     <div class="md-layout">
-                        <md-field>
+                        <md-field :class="messageClass">
+                            <md-input v-model="userRegister.name" name="name"
+                                      placeholder="Имя пользователя"></md-input>
+                            <span class="md-error" v-if="has_error && errors.name" v-for="error in errors.name">{{ error }}</span>
+                        </md-field>
+                        <md-field :class="messageClass">
                             <md-input v-model="userRegister.email" name="email" type="email"
                                       placeholder="Адрес электронной почты"></md-input>
+                            <span class="md-error" v-if="has_error && errors.email" v-for="error in errors.email">{{ error }}</span>
                         </md-field>
-                        <md-field>
+                        <md-field :class="messageClass">
                             <md-input v-model="userRegister.password" name="password" type="password"
                                       placeholder="Пароль" required></md-input>
-                            <span class="md-error" v-if="has_error && errors.password">{{ errors.password }}</span>
+                            <span class="md-error" v-if="has_error && errors.password" v-for="error in errors.password">{{ error }}</span>
                         </md-field>
-                        <md-field>
+                        <md-field :class="messageClass">
                             <md-input v-model="userRegister.password_confirmation" name="password" type="password"
                                       placeholder="Подтвердите пароль" required></md-input>
 
@@ -77,35 +88,57 @@
             has_error: false,
             error: '',
             errors: {},
-            success: false
+            success: false,
+            hasMessages: false
         }),
+        computed: {
+            messageClass() {
+                return {
+                    'md-invalid': this.hasMessages
+                }
+            }
+        },
         methods: {
-            showLoginForm: function() {
+            logout: function () {
+                this.$auth.logout({
+                    makeRequest: true,
+                    redirect: {name: 'home'},
+                });
+            },
+            showLoginForm: function () {
                 this.showLogin = true;
                 this.showSignup = false;
             },
-            showSignupForm: function() {
+            showSignupForm: function () {
                 this.showLogin = false;
                 this.showSignup = true;
             },
-            login: function() {
+            login: function () {
                 let app = this;
                 this.$auth.login({
-                    body: this.userLogin,
-                    success: function() {
-
-                    }
+                    data: this.userLogin,
+                    success: function () {
+                        app.showLogin = false;
+                    },
+                    error: function(res) {
+                        app.hasMessages = true
+                        app.has_error = true
+                        app.error = res.response.data.error
+                        app.errors = res.response.data.errors || {}
+                    },
+                    redirect: '/profile'
                 })
             },
-            register: function() {
+            register: function () {
                 let app = this;
                 this.$auth.register({
                     data: this.userRegister,
-                    success: function() {
-
+                    redirect: false,
+                    success: function () {
+                        app.showLoginForm();
                     },
                     error: function (res) {
-                        console.log(res.response.data.errors)
+                        app.hasMessages = true
                         app.has_error = true
                         app.error = res.response.data.error
                         app.errors = res.response.data.errors || {}

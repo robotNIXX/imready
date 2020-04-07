@@ -1,10 +1,12 @@
 <?php
 
+
 namespace App\Http\FormRequests\User;
+
 
 use App\Http\FormRequests\IRFormRequest;
 
-class UserRegisterRequest extends IRFormRequest
+class UserLoginRequest extends IRFormRequest
 {
     public function authorize()
     {
@@ -14,10 +16,8 @@ class UserRegisterRequest extends IRFormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|unique:users,name',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:3'
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required'
         ];
     }
-
 }

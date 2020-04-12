@@ -22,7 +22,7 @@ Vue.router = router
 Vue.use(VueRouter)
 // Set Vue authentication
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = '/api/v1'
+axios.defaults.baseURL = '/api'
 Vue.use(VueAuth, auth)
 Vue.use(VueMaterial)
 Vue.material.locale.dateFormat = 'dd.MM.yyyy'

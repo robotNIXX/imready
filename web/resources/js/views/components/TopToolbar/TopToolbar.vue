@@ -126,7 +126,7 @@
                         app.error = res.response.data.error
                         app.errors = res.response.data.errors || {}
                     },
-                    redirect: '/profile'
+                    redirect: '/dashboard'
                 })
             },
             register: function () {

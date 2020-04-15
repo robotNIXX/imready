@@ -1,0 +1,24 @@
+.logout-link {
+  i {
+    margin-left: 0px !important;
+  }
+}
+
+.main-menu {
+  .md-list-item {
+    a {
+      text-decoration: none;
+      color: #2C2C2C;
+      &:hover {
+        background-color: #DBDBDB;
+        color: #2C2C2C;
+        text-decoration: none;
+      }
+    }
+    &:hover {
+      background-color: #DBDBDB;
+      color: #2C2C2C;
+      text-decoration: none;
+    }
+  }
+}

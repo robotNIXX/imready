@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\FormRequests\User\UserLoginRequest;
 use App\Http\FormRequests\User\UserRegisterRequest;
 use App\Models\User;
+use App\Repositories\UsersRepository;
 use App\Transformers\UsersTransformer;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,17 +16,25 @@ use Tymon\JWTAuth\Contracts\Providers\Auth;
 
 class AuthController extends APIController
 {
+
+    protected $usersRepository;
+
+    public function __construct(UsersRepository $usersRepository)
+    {
+        $this->usersRepository = $usersRepository;
+    }
+
     /**
      * @param UserRegisterRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(UserRegisterRequest $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $this->usersRepository->save([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
 
         return $this->response->accepted();
     }
@@ -37,7 +46,8 @@ class AuthController extends APIController
     {
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
-            return $this->response->noContent()->withHeader('Authorization', $token);
+            $user = $this->usersRepository->findByField('email', $request->email)[0];
+            return $this->response->item($user, new UsersTransformer)->withHeader('Authorization', $token);
         }
         return $this->response->error('login_error', 401);
     }

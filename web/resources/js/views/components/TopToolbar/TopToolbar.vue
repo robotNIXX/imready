@@ -6,8 +6,40 @@
         <div class="auth-block md-layout-item md-size-25" v-if="!$auth.check()" @click="showLoginForm()">
             <md-icon>person</md-icon>
         </div>
-        <div class="auth-block md-layout-item md-size-25" v-if="$auth.check()" @click="logout()">
-            <md-icon>exit_to_app</md-icon>
+
+        <div class="auth-block md-layout-item md-size-25" v-if="$auth.check()">
+          <md-menu md-size="medium" md-align-trigger>
+              <md-button md-menu-trigger>
+
+                <md-icon>account_circle</md-icon>
+                {{ $auth.user().name }}
+                <md-icon>expand_more</md-icon>
+              </md-button>
+
+              <md-menu-content class="main-menu">
+                  <md-menu-item>
+                    <md-icon>home</md-icon>
+                    <router-link to="/">
+                      Список задач
+                    </router-link>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-icon>face</md-icon>
+                      <router-link to="/dashboard">
+                         Личный кабинет
+                      </router-link>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-icon>settings</md-icon>
+                    <router-link to="/profile">
+                      Профиль
+                    </router-link>
+                  </md-menu-item>
+                  <md-menu-item class="logout-link"  @click="logout()">
+                    <md-icon>exit_to_app</md-icon> Выйти
+                  </md-menu-item>
+              </md-menu-content>
+          </md-menu>
         </div>
         <md-dialog :md-active.sync="showLogin" class="modal-login">
             <md-dialog-title>
@@ -89,12 +121,21 @@
             error: '',
             errors: {},
             success: false,
-            hasMessages: false
+            hasMessages: false,
+            user: {}
         }),
         computed: {
             messageClass() {
                 return {
                     'md-invalid': this.hasMessages
+                }
+            }
+        },
+        created() {
+            return {
+                _user() {
+                    console.log(this.$auth.user());
+                    return this.$auth.user() || {};
                 }
             }
         },
@@ -117,10 +158,11 @@
                 let app = this;
                 this.$auth.login({
                     data: this.userLogin,
-                    success: function () {
+                    success: function (res) {
                         app.showLogin = false;
+                        app.$auth.user(res.data);
                     },
-                    error: function(res) {
+                    error: function (res) {
                         app.hasMessages = true
                         app.has_error = true
                         app.error = res.response.data.error

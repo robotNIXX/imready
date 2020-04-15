@@ -2076,6 +2076,27 @@ html.md-theme-default {
   background-color: #fff;
 }
 
+.logout-link i {
+  margin-left: 0px !important;
+}
+
+.main-menu .md-list-item a {
+  text-decoration: none;
+  color: #2C2C2C;
+}
+
+.main-menu .md-list-item a:hover {
+  background-color: #DBDBDB;
+  color: #2C2C2C;
+  text-decoration: none;
+}
+
+.main-menu .md-list-item:hover {
+  background-color: #DBDBDB;
+  color: #2C2C2C;
+  text-decoration: none;
+}
+
 .md-app-content {
   padding: 0px !important;
 }

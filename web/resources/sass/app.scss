@@ -6,9 +6,10 @@
     accent: md-get-palette-color(red, A200) // The accent or secondary color
 ));
 
+@import "mixins";
+@import "variables";
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
-@import "mixins";
 //components
 @import "components/components.modals";
 //pages

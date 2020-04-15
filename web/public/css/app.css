@@ -2088,3 +2088,19 @@ html.md-theme-default {
   text-align: right;
 }
 
+body {
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Roboto Slab", serif;
+}
+
+md-icon {
+  font-family: "Material Icons";
+}
+

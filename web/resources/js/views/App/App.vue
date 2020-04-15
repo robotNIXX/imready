@@ -1,17 +1,18 @@
 <template>
-    <div>
-        <h1>Vue Router Demo App</h1>
-
-        <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
-            <router-link :to="{ name: 'hello' }">Hello World</router-link>
-        </p>
-
-        <div class="container">
-            <router-view></router-view>
-        </div>
+    <div class="page-container">
+        <md-app>
+            <md-app-content>
+                <top-toolbar></top-toolbar>
+                <router-view></router-view>
+            </md-app-content>
+        </md-app>
     </div>
 </template>
 <script>
-    export default {}
+    import TopToolbar from "../components/TopToolbar/TopToolbar";
+    export default {
+        components: {
+            TopToolbar
+        }
+    }
 </script>

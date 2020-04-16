@@ -134,7 +134,6 @@
         created() {
             return {
                 _user() {
-                    console.log(this.$auth.user());
                     return this.$auth.user() || {};
                 }
             }

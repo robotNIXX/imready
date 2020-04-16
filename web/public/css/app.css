@@ -2097,6 +2097,47 @@ html.md-theme-default {
   text-decoration: none;
 }
 
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  background-color: #e0e0e0;
+}
+
+.breadcrumb ul {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  padding: 10px;
+  margin: 0px;
+  list-style: none;
+}
+
+.breadcrumb ul li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.breadcrumb ul li.linked {
+  color: #83C3C3;
+  cursor: pointer;
+}
+
+.breadcrumb ul li span {
+  display: flex;
+}
+
+.breadcrumb ul li i {
+  display: flex;
+  font-size: 14px !important;
+  height: 16px !important;
+  margin-top: 3px;
+}
+
 .md-app-content {
   padding: 0px !important;
 }

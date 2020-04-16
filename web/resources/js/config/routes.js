@@ -21,7 +21,12 @@ const routes = [
         name: 'home',
         component: Home,
         meta: {
-            auth: undefined
+            auth: undefined,
+            breadcrumb: [
+                {
+                    name: "Список задач",
+                }
+            ]
         }
     },
     {
@@ -29,7 +34,16 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: {
-            auth: true
+            auth: true,
+            breadcrumb: [
+                {
+                    name: "Список задач",
+                    link: "/"
+                },
+                {
+                    name: "Профиль"
+                }
+            ]
         }
     },
     {
@@ -37,7 +51,16 @@ const routes = [
         name: 'dashboard',
         component: Dashboard,
         meta: {
-            auth: true
+            auth: true,
+            breadcrumb: [
+                {
+                    name: "Список задач",
+                    link: "/"
+                },
+                {
+                    name: "Личный кабинет"
+                }
+            ]
         }
     }
 ]

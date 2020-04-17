@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "bensampo/laravel-enum": "^1.37",
         "beyondcode/laravel-websockets": "^1.4",
         "dingo/api": "^3.0.0",
         "doctrine/dbal": "^2.10",

@@ -52,11 +52,19 @@
             return [];
         }
 
-        public function registerMediaConversions(Media $media = NULL)
+        public function registerMediaConversions(Media $media = null)
         {
             $this->addMediaConversion('avatar')
                 ->width(100)
                 ->height(100)
                 ->sharpen(10);
+        }
+
+        /**
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany
+         */
+        public function tasks()
+        {
+            return $this->hasMany(Task::class, 'author_id');
         }
     }

@@ -1,29 +1,54 @@
-version: '2'
-
+version: '3'
 services:
-  mysql:
-    image: 'mysql:5.7'
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_ALLOW_EMPTY_PASSWORD=0
-      - MYSQL_RANDOM_ROOT_PASSWORD=0
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_USER=dev
-      - MYSQL_DATABASE=imready
-      - MYSQL_PASSWORD=dev
-
-  myapp:
-    tty: true
-    image: bitnami/laravel:7
-    environment:
-      - DB_HOST=mysql
-      - DB_USERNAME=dev
-      - DB_DATABASE=imready
-      - DB_PASSWORD=dev
-    depends_on:
-      - mysql
-    ports:
-      - 3000:3000
-    volumes:
-      - ./web:/app
-    # privileged: true # Privileged mode could be required to run this container under Windows
+    web:
+        image: nginx:1.15.6
+        volumes:
+            - "./etc/nginx:/etc/nginx/conf.d"
+            - "./etc/ssl:/etc/ssl"
+            - "./web:/var/www/html"
+        ports:
+            - "80:80"
+            - "3000:443"
+        restart: always
+        depends_on:
+            - php
+            - mysqldbapp
+    php:
+        image: nanoninja/php-fpm:${PHP_VERSION}
+        restart: always
+        volumes:
+#            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./web:/var/www/html"
+        depends_on:
+            - mysqldbapp
+    composer:
+        image: "composer"
+        volumes:
+            - "./web/app:/app"
+        command: install
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadminapp
+        ports:
+            - "8080:80"
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=${MYSQL_HOST}
+        restart: always
+        depends_on:
+            - mysqldbapp
+    mysqldbapp:
+        image: mysql:${MYSQL_VERSION}
+        container_name: ${MYSQL_HOST}
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"

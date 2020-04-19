@@ -30,7 +30,7 @@ class AuthController extends APIController
      */
     public function register(UserRegisterRequest $request)
     {
-        $this->usersRepository->save([
+        $this->usersRepository->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)

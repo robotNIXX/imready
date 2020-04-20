@@ -1,4 +1,3 @@
-
 // Set Vue globally
 window.Vue = Vue
 
@@ -14,8 +13,13 @@ import router from './config/routes.js'
 import VueLayers from 'vuelayers'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import store from './stores/index';
+import vueMoment from 'vue-moment';
 
 import App from './views/App/App';
+
+const moment = require('moment')
+require('moment/locale/ru')
 
 // Set Vue router
 Vue.router = router
@@ -26,6 +30,9 @@ axios.defaults.baseURL = '/api'
 Vue.use(VueAuth, auth)
 Vue.use(VueMaterial)
 Vue.material.locale.dateFormat = 'dd.MM.yyyy'
+Vue.use(vueMoment, {
+    moment
+});
 
 Vue.use(VueLayers, {
     dataProjection: 'EPSG:4326',
@@ -36,7 +43,8 @@ Vue.use(VueLayers, {
 Vue.component('app', App)
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store
 });
 // new Vue(App).$mount('#app');
 

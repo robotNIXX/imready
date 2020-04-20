@@ -17,7 +17,7 @@
         protected $table = 'tasks';
 
 
-        public static function status2Text(Integer $status)
+        public static function status2Text(String $status)
         {
             switch ($status) {
                 default:

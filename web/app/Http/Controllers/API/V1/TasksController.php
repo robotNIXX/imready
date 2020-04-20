@@ -6,6 +6,7 @@
 
     use App\Repositories\Criterias\CustomerTasksCriteria;
     use App\Repositories\TasksRepository;
+    use App\Transformers\TasksTransformer;
 
     /**
      * Class TasksController
@@ -33,7 +34,7 @@
             $customerTasks = $this->tasksRepository->all();
             $this->tasksRepository->popCriteria(CustomerTasksCriteria::class);
 
-            return $this->response->collection();
+            return $this->response->collection($customerTasks, new TasksTransformer);
 //            $customerTasks =
         }
     }

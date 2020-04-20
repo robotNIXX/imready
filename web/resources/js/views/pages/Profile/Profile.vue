@@ -1,12 +1,9 @@
 <template>
-    <div class="Profile">
-        <pre v-text="$attrs"/>
+    <div class="md-layout">
     </div>
 </template>
 
 <script>
     export default {
-        props: {
-        },
     };
 </script>

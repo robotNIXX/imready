@@ -17,7 +17,7 @@
          *
          * @param  Integer  $authorId
          */
-        public function __construct(Integer $authorId)
+        public function __construct(int $authorId)
         {
             $this->authorId = $authorId;
         }

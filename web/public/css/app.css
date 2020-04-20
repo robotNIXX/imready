@@ -2138,6 +2138,50 @@ html.md-theme-default {
   margin-top: 3px;
 }
 
+.md-card.task {
+  margin-bottom: 10px;
+  margin-left: 0px !important;
+}
+
+.md-card.task .task-status {
+  display: flex;
+  flex-grow: 1;
+  height: 5px;
+}
+
+.md-card.task .task-status.task-open {
+  background-color: #c7f38c;
+}
+
+.md-card.task .task-status.task-in-progress {
+  background-color: #87a3eb;
+}
+
+.md-card.task .task-status.task-completed {
+  background-color: #3800cc;
+}
+
+.md-card.task .task-status.task-canceled {
+  background-color: #ffd993;
+}
+
+.md-card.task .md-card-content .content-item {
+  display: flex;
+  flex-grow: 1;
+  padding-bottom: 10px;
+  flex-direction: column;
+}
+
+.md-card.task .md-card-content .content-item label {
+  display: flex;
+  flex-grow: 1;
+  font-weight: 600;
+}
+
+.md-card.task .md-card-actions {
+  align-items: end;
+}
+
 .md-app-content {
   padding: 0px !important;
 }
@@ -2164,5 +2208,15 @@ h4 {
 
 md-icon {
   font-family: "Material Icons";
+}
+
+.profile-tasks {
+  background-color: #F5F5F5;
+}
+
+.profile-tasks .tasks-board {
+  margin: 10px;
+  padding: 10px;
+  background-color: #fff;
 }
 

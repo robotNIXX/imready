@@ -55,6 +55,11 @@ $api->version('v1', function ($api) {
             // Logout user from application
             $api->post('logout', 'App\Http\Controllers\API\V1\AuthController@logout');
 
+            $api->group(['prefix' => 'tasks'], function($api) {
+              $api->get('/author', 'App\Http\Controllers\API\V1\TasksController@customerTasks');
+            }
+          );
+
         });
     });
 

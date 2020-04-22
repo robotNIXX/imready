@@ -9,10 +9,19 @@
 body
     font-family: $font_content !important
     font-size: $font_content_size !important
+    min-height: 100%
+    #app
+      display: flex
+      flex-grow: 1
+      min-height: 100vh
+      .page-container
+        display: flex
+        flex-grow: 1
+        .md-app
+          flex-grow: 1
 
 h1,h2,h3,h4
     font-family: $font_headers
 
 md-icon
     font-family: 'Material Icons'
-

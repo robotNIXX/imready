@@ -2182,6 +2182,27 @@ html.md-theme-default {
   align-items: end;
 }
 
+.button-create-task {
+  float: left;
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  z-index: 5;
+}
+
+.button-create-task .create-task-button {
+  cursor: pointer;
+}
+
+.button-create-task .create-task-button:hover .md-icon {
+  color: #ff9c00 !important;
+}
+
+.button-create-task .create-task-button .md-icon {
+  color: #e83079 !important;
+  font-size: 48px !important;
+}
+
 .md-app-content {
   padding: 0px !important;
 }
@@ -2197,6 +2218,22 @@ html.md-theme-default {
 body {
   font-family: "Open Sans", sans-serif !important;
   font-size: 14px !important;
+  min-height: 100%;
+}
+
+body #app {
+  display: flex;
+  flex-grow: 1;
+  min-height: 100vh;
+}
+
+body #app .page-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+body #app .page-container .md-app {
+  flex-grow: 1;
 }
 
 h1,

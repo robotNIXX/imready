@@ -1,0 +1,19 @@
+.button-create-task {
+  float: left;
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  z-index: 5;
+  .create-task-button {
+    cursor: pointer;
+    &:hover {
+      .md-icon {
+        color: #ff9c00 !important;
+      }
+    }
+    .md-icon {
+      color: #e83079 !important;
+      font-size: 48px !important;
+    }
+  }
+}
